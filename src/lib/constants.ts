@@ -12,6 +12,7 @@ export const NAV_ITEMS = [
   { label: "Watch", href: "/products/watch" },
   { label: "Buds", href: "/products/buds" },
   { label: "比較", href: "/compare" },
+  { label: "Google", href: "/google" },
 ] as const;
 
 export const SCROLL_BLUR_THRESHOLD = 50;
