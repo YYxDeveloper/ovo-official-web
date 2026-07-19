@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { pixelProducts } from "@/data/google";
-import type { PixelProduct, PixelColor } from "@/data/google";
+import type { PixelProduct } from "@/data/google";
+import type { ColorVariant } from "@/data/types";
 
 // Google brand colors
 const G_COLORS = {
@@ -23,14 +24,16 @@ function GoogleGLogo() {
   );
 }
 
+const GOOGLE_BLUE = "#1a73e8";
+
 function ColorPicker({
   colors,
   selected,
   onChange,
 }: {
-  colors: PixelColor[];
-  selected: PixelColor;
-  onChange: (color: PixelColor) => void;
+  colors: ColorVariant[];
+  selected: ColorVariant;
+  onChange: (color: ColorVariant) => void;
 }) {
   return (
     <div className="flex items-center gap-2">
@@ -42,7 +45,7 @@ function ColorPicker({
           className="h-7 w-7 rounded-full border-2 transition-all"
           style={{
             backgroundColor: color.hex,
-            borderColor: selected.name === color.name ? "#1a73e8" : "#dadce0",
+            borderColor: selected.name === color.name ? GOOGLE_BLUE : "#dadce0",
             transform: selected.name === color.name ? "scale(1.15)" : "scale(1)",
           }}
         />
@@ -61,7 +64,7 @@ function HeroSection({ product }: { product: PixelProduct }) {
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           {/* Text side */}
           <div>
-            <p className="mb-2 text-sm font-medium text-[#1a73e8]">Pixel 9 Series</p>
+            <p className="mb-2 text-sm font-medium" style={{ color: GOOGLE_BLUE }}>Pixel 9 Series</p>
             <h1 className="text-4xl font-semibold tracking-tight text-gray-900 md:text-5xl lg:text-6xl">
               {product.name}
             </h1>
@@ -88,7 +91,7 @@ function HeroSection({ product }: { product: PixelProduct }) {
               >
                 Buy
               </button>
-              <button className="rounded-full border border-gray-300 px-8 py-3 text-sm font-medium text-[#1a73e8] transition-colors hover:bg-gray-100">
+              <button className="rounded-full border border-gray-300 px-8 py-3 text-sm font-medium transition-colors hover:bg-gray-100" style={{ color: GOOGLE_BLUE }}>
                 Learn more
               </button>
             </div>

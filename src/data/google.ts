@@ -1,26 +1,16 @@
-export interface PixelColor {
-  name: string;
-  hex: string;
-  imageUrl: string;
-}
-
-export interface PixelSpec {
-  label: string;
-  value: string;
-}
+import type { ColorVariant, ProductSpec } from "./types";
 
 export interface PixelProduct {
   id: string;
   name: string;
   tagline: string;
   basePrice: number;
-  colors: PixelColor[];
-  specs: PixelSpec[];
-  heroImage: string;
+  colors: ColorVariant[];
+  specs: ProductSpec[];
   featured?: boolean;
 }
 
-const pixelColors: Record<string, PixelColor> = {
+const pixelColors: Record<string, ColorVariant> = {
   obsidian: {
     name: "Obsidian",
     hex: "#1a1a1a",
@@ -63,7 +53,6 @@ export const pixelProducts: PixelProduct[] = [
       { label: "RAM", value: "12 GB LPDDR5X" },
       { label: "Water resistance", value: "IP68" },
     ],
-    heroImage: "https://picsum.photos/seed/pixel9-hero/1600/900",
     featured: false,
   },
   {
@@ -85,7 +74,6 @@ export const pixelProducts: PixelProduct[] = [
       { label: "RAM", value: "16 GB LPDDR5X" },
       { label: "Water resistance", value: "IP68" },
     ],
-    heroImage: "https://picsum.photos/seed/pixel9pro-hero/1600/900",
     featured: true,
   },
   {
@@ -107,7 +95,6 @@ export const pixelProducts: PixelProduct[] = [
       { label: "RAM", value: "16 GB LPDDR5X" },
       { label: "Water resistance", value: "IP68" },
     ],
-    heroImage: "https://picsum.photos/seed/pixel9proxl-hero/1600/900",
     featured: false,
   },
 ];
