@@ -43,7 +43,7 @@
 
 ### Header States
 - Default: `background: transparent`
-- Scrolled (>50px): `background: rgba(0,0,0,0.8)`, `backdrop-filter: blur(20px)`
+- Scrolled (>50px): `background: rgba(0,0,0,0.72)`, `backdrop-filter: blur(20px)`
 
 ## Animation Principles
 
@@ -61,5 +61,5 @@
 | Breakpoint | Width | Layout |
 |---|---|---|
 | Mobile | < 768px | Single column, hamburger nav |
-| Tablet | 768–1024px | 2-column grid |
+| Tablet | 768–1024px | 3-column grid |
 | Desktop | > 1024px | 3–4 column grid, mega menu |

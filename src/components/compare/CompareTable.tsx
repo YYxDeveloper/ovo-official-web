@@ -7,14 +7,21 @@ import type { Product, ProductSpec } from "@/data/types";
 import { formatPrice } from "@/lib/format";
 import { useCompareStore, MAX_COMPARE_ITEMS } from "@/lib/store/compareStore";
 import { categoryLabelsZh } from "@/data/products";
-
-const SLOT_COUNT = MAX_COMPARE_ITEMS;
+import { cn } from "@/lib/utils";
 
 export function CompareTable() {
   const items = useCompareStore((s) => s.items);
   const removeItem = useCompareStore((s) => s.removeItem);
 
-  const emptySlots = Math.max(0, SLOT_COUNT - items.length);
+  if (items.length === 0) {
+    return (
+      <div className="py-12 text-center text-ovo-muted">
+        尚未加入任何產品，請先從產品頁面加入比較。
+      </div>
+    );
+  }
+
+  const emptySlots = Math.max(0, MAX_COMPARE_ITEMS - items.length);
 
   // Build union of spec labels
   const labelSet = new Set<string>();
@@ -104,9 +111,10 @@ export function CompareTable() {
           {rows.map((label, idx) => (
             <tr key={label}>
               <th
-                className={`sticky left-0 z-10 px-4 py-3 text-xs font-medium uppercase tracking-wider text-ovo-muted ${
-                  idx % 2 === 0 ? "bg-ovo-black" : "bg-ovo-darkgray/40"
-                }`}
+                className={cn(
+                  "sticky left-0 z-10 px-4 py-3 text-xs font-medium uppercase tracking-wider text-ovo-muted",
+                  idx % 2 === 0 ? "bg-ovo-black" : "bg-ovo-darkgray/40",
+                )}
               >
                 {label}
               </th>
@@ -115,9 +123,10 @@ export function CompareTable() {
                 return (
                   <td
                     key={p.id}
-                    className={`border-b border-ovo-border px-4 py-3 text-ovo-text ${
-                      idx % 2 === 0 ? "" : "bg-ovo-card/30"
-                    }`}
+                    className={cn(
+                      "border-b border-ovo-border px-4 py-3 text-ovo-text",
+                      idx % 2 !== 0 && "bg-ovo-card/30",
+                    )}
                   >
                     {value ?? <span className="text-ovo-muted">—</span>}
                   </td>
@@ -126,9 +135,10 @@ export function CompareTable() {
               {Array.from({ length: emptySlots }).map((_, i) => (
                 <td
                   key={`empty-${label}-${i}`}
-                  className={`border-b border-dashed border-ovo-border px-4 py-3 text-ovo-muted ${
-                    idx % 2 === 0 ? "" : "bg-ovo-card/30"
-                  }`}
+                  className={cn(
+                    "border-b border-dashed border-ovo-border px-4 py-3 text-ovo-muted",
+                    idx % 2 !== 0 && "bg-ovo-card/30",
+                  )}
                 >
                   —
                 </td>

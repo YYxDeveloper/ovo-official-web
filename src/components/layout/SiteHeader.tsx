@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { Menu, X, GitCompare } from "lucide-react";
 import { MegaMenu } from "./MegaMenu";
-import { SCROLL_BLUR_THRESHOLD } from "@/lib/constants";
+import { NAV_ITEMS, SCROLL_BLUR_THRESHOLD } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
@@ -50,7 +50,7 @@ export function SiteHeader() {
             aria-label="比較"
             className="rounded-full p-2 text-ovo-text/80 transition hover:text-ovo-text"
           >
-            <ShoppingBag className="size-4" />
+            <GitCompare className="size-4" />
           </Link>
         </div>
 
@@ -75,12 +75,7 @@ export function SiteHeader() {
             className="border-t border-ovo-border bg-ovo-black/95 backdrop-blur-xl md:hidden"
           >
             <ul className="mx-auto flex max-w-[1024px] flex-col gap-1 px-4 py-4">
-              {[
-                { label: "Phone", href: "/products/phone" },
-                { label: "Watch", href: "/products/watch" },
-                { label: "Buds", href: "/products/buds" },
-                { label: "比較", href: "/compare" },
-              ].map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}

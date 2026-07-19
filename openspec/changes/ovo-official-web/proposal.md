@@ -14,11 +14,11 @@ Build an Apple Store TW-inspired official website for the fictitious 3C brand "o
 
 | Layer | Library / Version |
 |---|---|
-| Framework | Next.js 15 (App Router) |
+| Framework | Next.js 16 (App Router) |
 | UI | React 19 + TypeScript 5 |
 | Styling | Tailwind CSS 4 + shadcn/ui (New York, Zinc) |
-| Animation | Framer Motion 11 |
-| State | Zustand 4 (compare) + nuqs (URL variant) |
+| Animation | Framer Motion 12 |
+| State | Zustand 5 (compare) + nuqs (URL variant) |
 | Navigation | @radix-ui/react-navigation-menu |
 
 ## Scope
