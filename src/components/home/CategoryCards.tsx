@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import type { ProductCategory } from "@/data/types";
 import { categoryLabelsZh } from "@/data/products";
@@ -34,7 +34,7 @@ const container: Variants = {
 };
 
 const item: Variants = {
-  hidden: { y: 30, opacity: 1 },
+  hidden: { y: 30, opacity: 0 },
   show: {
     y: 0,
     opacity: 1,
@@ -42,17 +42,7 @@ const item: Variants = {
   },
 };
 
-const itemWithMotion: Variants = {
-  hidden: { y: 30 },
-  show: {
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  },
-};
-
 export function CategoryCards() {
-  const shouldReduceMotion = useReducedMotion();
-  const activeItem = shouldReduceMotion ? item : itemWithMotion;
   return (
     <section className="bg-ovo-darkgray">
       <div className="mx-auto max-w-[1280px] px-4 py-16 md:px-6 md:py-24">
@@ -73,7 +63,7 @@ export function CategoryCards() {
           className="grid grid-cols-1 gap-5 md:grid-cols-3"
         >
           {CARDS.map((card) => (
-            <motion.div key={card.key} variants={activeItem}>
+            <motion.div key={card.key} variants={item}>
               <Link
                 href={`/products/${card.key}`}
                 className="group block overflow-hidden rounded-[var(--radius-lg)] bg-ovo-card transition-transform duration-500 hover:scale-[1.02] hover:-translate-y-1"
