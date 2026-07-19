@@ -98,6 +98,36 @@ test("T6 — product card color picker updates image", async ({ page }) => {
   await fullPageScroll(page);
 });
 
+// T8: Page content completeness
+test("T8 — all sections and elements rendered correctly", async ({ page }) => {
+  await page.goto("/google");
+  await waitForHydration(page);
+
+  // Brand bar
+  await expect(page.getByText("Google Store")).toBeVisible();
+
+  // Hero price
+  await expect(page.getByText("From $999").first()).toBeVisible();
+
+  // Hero CTA buttons
+  await expect(page.getByRole("button", { name: "Buy" }).first()).toBeVisible();
+  await expect(page.getByRole("button", { name: "Learn more" })).toBeVisible();
+
+  // Product grid: exactly 3 product cards
+  const productCards = page.locator(".grid.gap-6 .border-gray-200");
+  await expect(productCards).toHaveCount(3);
+
+  // Product names
+  await expect(page.getByRole("heading", { name: "Pixel 9", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Pixel 9 Pro", exact: true }).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Pixel 9 Pro XL" })).toBeVisible();
+
+  // Footer tagline
+  await expect(page.getByText("Built with Google AI. Made for your life.")).toBeVisible();
+
+  await fullPageScroll(page);
+});
+
 // T7: RWD — mobile viewport
 test("T7 — mobile viewport: single column grid and stacked hero", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 812 });
