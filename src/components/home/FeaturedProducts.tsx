@@ -5,11 +5,9 @@ import type { Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import { getFeaturedProducts } from "@/data/products";
+import type { Product } from "@/data/types";
 import { formatPrice } from "@/lib/format";
 import { Button } from "@/components/ui/button";
-
-const featured = getFeaturedProducts().slice(0, 3);
 
 const card: Variants = {
   hidden: { y: 24, opacity: 1 },
@@ -33,7 +31,7 @@ const container: Variants = {
   show: { transition: { staggerChildren: 0.12 } },
 };
 
-export function FeaturedProducts() {
+export function FeaturedProducts({ products: featured }: { products: Product[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const activeCard = shouldReduceMotion ? card : cardWithMotion;

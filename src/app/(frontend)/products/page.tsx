@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { allProducts } from "@/data/products";
+import { getAllProducts } from "@/data/products";
 import { ProductGrid } from "@/components/product/ProductGrid";
 
 export const metadata: Metadata = {
@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   description: "瀏覽全部 ovo 產品。",
 };
 
-export default function ProductsIndexPage() {
+export default async function ProductsIndexPage() {
+  const allProducts = await getAllProducts();
   return (
     <div className="mx-auto max-w-[1280px] px-4 py-12 md:px-6 md:py-20">
       <header className="mb-10">

@@ -1,28 +1,22 @@
-import type { Product, ProductCategory } from "./types";
-import { phoneProducts } from "./phone";
-import { watchProducts } from "./watch";
-import { budsProducts } from "./buds";
+import "server-only";
+import type { ProductCategory } from "./types";
+import * as dal from "@/lib/dal/products";
 
 export type { Product, ProductCategory, ColorVariant, StorageVariant, ProductSpec } from "./types";
+export { categoryLabelsZh } from "./constants";
 
-export const allProducts: Product[] = [...phoneProducts, ...watchProducts, ...budsProducts];
-
-export const productsByCategory: Record<ProductCategory, Product[]> = {
-  phone: phoneProducts,
-  watch: watchProducts,
-  buds: budsProducts,
-};
-
-export function getProductBySlug(category: ProductCategory, slug: string): Product | undefined {
-  return productsByCategory[category].find((p) => p.slug === slug);
+export async function getAllProducts() {
+  return dal.getAllProducts();
 }
 
-export function getFeaturedProducts(): Product[] {
-  return allProducts.filter((p) => p.featured);
+export async function getProductsByCategory(category: ProductCategory) {
+  return dal.getProductsByCategory(category);
 }
 
-export const categoryLabelsZh: Record<ProductCategory, string> = {
-  phone: "手機",
-  watch: "手錶",
-  buds: "耳機",
-};
+export async function getProductBySlug(_category: ProductCategory, slug: string) {
+  return dal.getProductBySlug(slug);
+}
+
+export async function getFeaturedProducts() {
+  return dal.getFeaturedProducts();
+}

@@ -7,8 +7,13 @@ import { Menu, X, GitCompare } from "lucide-react";
 import { MegaMenu } from "./MegaMenu";
 import { NAV_ITEMS, SCROLL_BLUR_THRESHOLD } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import type { Product, ProductCategory } from "@/data/types";
 
-export function SiteHeader() {
+export function SiteHeader({
+  productsByCategory,
+}: {
+  productsByCategory: Record<ProductCategory, Product[]>;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -41,7 +46,7 @@ export function SiteHeader() {
         </Link>
 
         <div className="hidden flex-1 justify-center md:flex">
-          <MegaMenu />
+          <MegaMenu productsByCategory={productsByCategory} />
         </div>
 
         <div className="hidden items-center gap-2 md:flex">

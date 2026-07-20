@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import type { ProductCategory } from "@/data/types";
-import { categoryLabelsZh } from "@/data/products";
+import { categoryLabelsZh } from "@/data/constants";
 
 const CARDS: { key: ProductCategory; title: string; tagline: string; image: string }[] = [
   {
