@@ -1,14 +1,21 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Package, LogOut } from "lucide-react";
 import { logoutAction } from "@/lib/auth/actions";
+import { verifySession } from "@/lib/auth/session";
 import { Button } from "@/components/ui/button";
 import "../globals.css";
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await verifySession();
+  if (!session) {
+    redirect("/admin/login");
+  }
+
   return (
     <html lang="zh-TW" className="h-full antialiased">
       <body className="flex min-h-full bg-zinc-950 text-zinc-100">

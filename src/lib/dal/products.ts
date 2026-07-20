@@ -146,37 +146,39 @@ export async function updateProduct(
 ): Promise<Product> {
   const { colors, storage, specs, images, ...productData } = data;
 
-  if (colors) {
-    await prisma.colorVariant.deleteMany({ where: { productId: id } });
-    await prisma.colorVariant.createMany({
-      data: colors.map((c, i) => ({ ...c, sortOrder: i, productId: id })),
-    });
-  }
-  if (storage) {
-    await prisma.storageVariant.deleteMany({ where: { productId: id } });
-    await prisma.storageVariant.createMany({
-      data: storage.map((s, i) => ({ ...s, sortOrder: i, productId: id })),
-    });
-  }
-  if (specs) {
-    await prisma.productSpec.deleteMany({ where: { productId: id } });
-    await prisma.productSpec.createMany({
-      data: specs.map((s, i) => ({ ...s, sortOrder: i, productId: id })),
-    });
-  }
-  if (images) {
-    await prisma.productImage.deleteMany({ where: { productId: id } });
-    await prisma.productImage.createMany({
-      data: images.map((url, i) => ({ url, sortOrder: i, productId: id })),
-    });
-  }
+  return prisma.$transaction(async (tx) => {
+    if (colors) {
+      await tx.colorVariant.deleteMany({ where: { productId: id } });
+      await tx.colorVariant.createMany({
+        data: colors.map((c, i) => ({ ...c, sortOrder: i, productId: id })),
+      });
+    }
+    if (storage) {
+      await tx.storageVariant.deleteMany({ where: { productId: id } });
+      await tx.storageVariant.createMany({
+        data: storage.map((s, i) => ({ ...s, sortOrder: i, productId: id })),
+      });
+    }
+    if (specs) {
+      await tx.productSpec.deleteMany({ where: { productId: id } });
+      await tx.productSpec.createMany({
+        data: specs.map((s, i) => ({ ...s, sortOrder: i, productId: id })),
+      });
+    }
+    if (images) {
+      await tx.productImage.deleteMany({ where: { productId: id } });
+      await tx.productImage.createMany({
+        data: images.map((url, i) => ({ url, sortOrder: i, productId: id })),
+      });
+    }
 
-  const p = await prisma.product.update({
-    where: { id },
-    data: productData,
-    include: includeAll,
+    const p = await tx.product.update({
+      where: { id },
+      data: productData,
+      include: includeAll,
+    });
+    return toProduct(p as ProductWithRelations);
   });
-  return toProduct(p as ProductWithRelations);
 }
 
 export async function deleteProduct(id: number): Promise<void> {
