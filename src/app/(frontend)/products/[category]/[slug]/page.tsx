@@ -6,17 +6,22 @@ import { CATEGORIES } from "@/lib/constants";
 import {
   categoryLabelsZh,
   getProductBySlug,
-  productsByCategory,
+  getProductsByCategory,
 } from "@/data/products";
 import type { ProductCategory } from "@/data/types";
 import { ProductImageGallery } from "@/components/product/ProductImageGallery";
 import { ProductHero } from "@/components/product/ProductHero";
 import { ProductSpecTable } from "@/components/product/ProductSpecTable";
 
-export function generateStaticParams() {
-  return CATEGORIES.flatMap((category) =>
-    productsByCategory[category].map((p) => ({ category, slug: p.slug })),
-  );
+export async function generateStaticParams() {
+  const results = [];
+  for (const category of CATEGORIES) {
+    const products = await getProductsByCategory(category);
+    for (const p of products) {
+      results.push({ category, slug: p.slug });
+    }
+  }
+  return results;
 }
 
 export async function generateMetadata({
@@ -25,7 +30,7 @@ export async function generateMetadata({
   params: Promise<{ category: string; slug: string }>;
 }): Promise<Metadata> {
   const { category, slug } = await params;
-  const product = getProductBySlug(category as ProductCategory, slug);
+  const product = await getProductBySlug(category as ProductCategory, slug);
   if (!product) return {};
   return {
     title: product.name,
@@ -44,7 +49,7 @@ export default async function ProductDetailPage({
 }) {
   const { category, slug } = await params;
   if (!isCategory(category)) notFound();
-  const product = getProductBySlug(category, slug);
+  const product = await getProductBySlug(category, slug);
   if (!product) notFound();
 
   return (

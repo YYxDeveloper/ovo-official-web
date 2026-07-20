@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CATEGORIES } from "@/lib/constants";
-import { productsByCategory, categoryLabelsZh } from "@/data/products";
+import { getProductsByCategory, categoryLabelsZh } from "@/data/products";
 import type { ProductCategory } from "@/data/types";
 import { ProductGrid } from "@/components/product/ProductGrid";
 
@@ -33,7 +33,7 @@ export default async function CategoryPage({
 }) {
   const { category } = await params;
   if (!isProductCategory(category)) notFound();
-  const products = productsByCategory[category];
+  const products = await getProductsByCategory(category);
   return (
     <div className="mx-auto max-w-[1280px] px-4 py-12 md:px-6 md:py-20">
       <header className="mb-10">

@@ -9,8 +9,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { productsByCategory, categoryLabelsZh } from "@/data/products";
-import type { ProductCategory } from "@/data/types";
+import { categoryLabelsZh } from "@/data/constants";
+import type { Product, ProductCategory } from "@/data/types";
 import { formatPrice } from "@/lib/format";
 
 const CATEGORIES: { key: ProductCategory; label: string }[] = [
@@ -19,7 +19,11 @@ const CATEGORIES: { key: ProductCategory; label: string }[] = [
   { key: "buds", label: categoryLabelsZh.buds },
 ];
 
-export function MegaMenu() {
+export function MegaMenu({
+  productsByCategory,
+}: {
+  productsByCategory: Record<ProductCategory, Product[]>;
+}) {
   return (
     <NavigationMenu viewport={false} className="text-ovo-text">
       <NavigationMenuList>
@@ -29,7 +33,7 @@ export function MegaMenu() {
               {label}
             </NavigationMenuTrigger>
             <NavigationMenuContent className="left-0 top-full w-[min(92vw,640px)] p-4">
-              <MegaMenuPanel category={key} />
+              <MegaMenuPanel category={key} products={productsByCategory[key]} />
             </NavigationMenuContent>
           </NavigationMenuItem>
         ))}
@@ -46,8 +50,7 @@ export function MegaMenu() {
   );
 }
 
-function MegaMenuPanel({ category }: { category: ProductCategory }) {
-  const products = productsByCategory[category];
+function MegaMenuPanel({ category, products }: { category: ProductCategory; products: Product[] }) {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {products.map((product) => (

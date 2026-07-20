@@ -6,7 +6,7 @@ import { X } from "lucide-react";
 import type { Product, ProductSpec } from "@/data/types";
 import { formatPrice } from "@/lib/format";
 import { useCompareStore, MAX_COMPARE_ITEMS } from "@/lib/store/compareStore";
-import { categoryLabelsZh } from "@/data/products";
+import { categoryLabelsZh } from "@/data/constants";
 import { cn } from "@/lib/utils";
 
 export function CompareTable() {
