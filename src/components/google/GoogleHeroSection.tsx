@@ -3,12 +3,7 @@
 import { useState } from "react";
 import type { PixelProduct } from "@/data/google";
 import { GoogleColorPicker } from "./GoogleColorPicker";
-
-const G_COLORS = {
-  blue: "#4285F4",
-};
-
-const GOOGLE_BLUE = "#1a73e8";
+import { G_COLORS, GOOGLE_BLUE } from "./constants";
 
 export function GoogleHeroSection({ product }: { product: PixelProduct }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);

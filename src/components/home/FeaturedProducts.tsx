@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import Link from "next/link";
-import { useRef } from "react";
 import type { Product } from "@/data/types";
 import { Button } from "@/components/ui/button";
 import { FeaturedProductCard } from "@/components/product/FeaturedProductCard";
@@ -31,7 +30,6 @@ const container: Variants = {
 };
 
 export function FeaturedProducts({ products: featured }: { products: Product[] }) {
-  const ref = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const activeCard = shouldReduceMotion ? card : cardWithMotion;
   return (
@@ -51,7 +49,6 @@ export function FeaturedProducts({ products: featured }: { products: Product[] }
       </div>
 
       <motion.div
-        ref={ref}
         variants={container}
         initial="hidden"
         whileInView="show"

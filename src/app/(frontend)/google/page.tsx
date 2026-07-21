@@ -4,13 +4,7 @@ import { pixelProducts } from "@/data/google";
 import { GoogleLogo } from "@/components/google/GoogleLogo";
 import { GoogleHeroSection } from "@/components/google/GoogleHeroSection";
 import { GoogleProductCard } from "@/components/google/GoogleProductCard";
-
-const G_COLORS = {
-  blue: "#4285F4",
-  red: "#EA4335",
-  yellow: "#FBBC04",
-  green: "#34A853",
-};
+import { G_COLORS } from "@/components/google/constants";
 
 export default function GooglePage() {
   const heroProduct = pixelProducts.find((p) => p.featured) ?? pixelProducts[1];

@@ -3,10 +3,7 @@
 import { useState } from "react";
 import type { PixelProduct } from "@/data/google";
 import { GoogleColorPicker } from "./GoogleColorPicker";
-
-const G_COLORS = {
-  blue: "#4285F4",
-};
+import { G_COLORS } from "./constants";
 
 export function GoogleProductCard({ product }: { product: PixelProduct }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
