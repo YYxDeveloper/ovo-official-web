@@ -1,37 +1,16 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import type { Product } from "@/data/types";
 import { Button } from "@/components/ui/button";
 import { FeaturedProductCard } from "@/components/product/FeaturedProductCard";
+import { staggerContainer, fadeUpItem } from "@/lib/animations";
 
-const card: Variants = {
-  hidden: { y: 24, opacity: 1 },
-  show: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  },
-};
-
-const cardWithMotion: Variants = {
-  hidden: { y: 24 },
-  show: {
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  },
-};
-
-const container: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
-};
+const card = fadeUpItem({ y: 24, duration: 0.5, fade: false });
+const container = staggerContainer({ staggerChildren: 0.12 });
 
 export function FeaturedProducts({ products: featured }: { products: Product[] }) {
-  const shouldReduceMotion = useReducedMotion();
-  const activeCard = shouldReduceMotion ? card : cardWithMotion;
   return (
     <section className="mx-auto max-w-[1280px] px-4 py-16 md:px-6 md:py-24">
       <div className="mb-10 flex items-end justify-between">
@@ -59,7 +38,7 @@ export function FeaturedProducts({ products: featured }: { products: Product[] }
           <FeaturedProductCard
             key={product.id}
             product={product}
-            variants={activeCard}
+            variants={card}
           />
         ))}
       </motion.div>

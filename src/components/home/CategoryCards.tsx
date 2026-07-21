@@ -1,10 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import type { Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ProductCategory } from "@/data/types";
 import { categoryLabelsZh } from "@/data/constants";
 import { CategoryCard } from "./CategoryCard";
+import { staggerContainer, fadeUpItem } from "@/lib/animations";
 
 const CARDS: { key: ProductCategory; title: string; tagline: string; image: string }[] = [
   {
@@ -27,31 +27,10 @@ const CARDS: { key: ProductCategory; title: string; tagline: string; image: stri
   },
 ];
 
-const container: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.15 } },
-};
-
-const item: Variants = {
-  hidden: { y: 30, opacity: 1 },
-  show: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  },
-};
-
-const itemWithMotion: Variants = {
-  hidden: { y: 30 },
-  show: {
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  },
-};
+const container = staggerContainer({ staggerChildren: 0.15 });
+const item = fadeUpItem({ y: 30, duration: 0.5, fade: false });
 
 export function CategoryCards() {
-  const shouldReduceMotion = useReducedMotion();
-  const activeItem = shouldReduceMotion ? item : itemWithMotion;
   return (
     <section className="bg-ovo-darkgray">
       <div className="mx-auto max-w-[1280px] px-4 py-16 md:px-6 md:py-24">
@@ -75,7 +54,7 @@ export function CategoryCards() {
             <CategoryCard
               key={card.key}
               category={card}
-              variants={activeItem}
+              variants={item}
             />
           ))}
         </motion.div>
