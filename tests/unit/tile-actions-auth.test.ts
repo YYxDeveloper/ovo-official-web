@@ -144,16 +144,16 @@ describe("tile Server Actions — DAL error handling", () => {
     expect(result).toEqual({ error: "Slug 已存在" });
   });
 
-  it("createTileAction returns generic error message on DAL failure", async () => {
+  it("createTileAction returns sanitized error on DAL failure", async () => {
     const { createTile } = await import("@/lib/dal/tiles");
     vi.mocked(createTile).mockRejectedValue(new Error("Database connection lost"));
 
     const result = await createTileAction(undefined, makeFormData(validTileFields));
 
-    expect(result).toEqual({ error: "Database connection lost" });
+    expect(result).toEqual({ error: "建立失敗" });
   });
 
-  it("updateTileAction returns error message on DAL failure", async () => {
+  it("updateTileAction returns sanitized error on DAL failure", async () => {
     const { updateTile } = await import("@/lib/dal/tiles");
     vi.mocked(updateTile).mockRejectedValue(new Error("Record not found"));
 
@@ -162,10 +162,10 @@ describe("tile Server Actions — DAL error handling", () => {
       makeFormData({ ...validTileFields, id: "1" })
     );
 
-    expect(result).toEqual({ error: "Record not found" });
+    expect(result).toEqual({ error: "更新失敗" });
   });
 
-  it("deleteTileAction returns error message on DAL failure", async () => {
+  it("deleteTileAction returns sanitized error on DAL failure", async () => {
     const { deleteTile } = await import("@/lib/dal/tiles");
     vi.mocked(deleteTile).mockRejectedValue(new Error("Foreign key constraint"));
 
@@ -174,6 +174,6 @@ describe("tile Server Actions — DAL error handling", () => {
       makeFormData({ id: "1" })
     );
 
-    expect(result).toEqual({ error: "Foreign key constraint" });
+    expect(result).toEqual({ error: "刪除失敗" });
   });
 });

@@ -53,9 +53,9 @@ export async function createTileAction(
   try {
     await dal.createTile(result.data);
   } catch (e) {
-    const message = e instanceof Error ? e.message : "建立失敗";
+    const message = e instanceof Error ? e.message : "";
     if (message.includes("Unique constraint")) return { error: "Slug 已存在" };
-    return { error: message };
+    return { error: "建立失敗" };
   }
 
   revalidateAll();
@@ -84,8 +84,8 @@ export async function updateTileAction(
 
   try {
     await dal.updateTile(id, result.data);
-  } catch (e) {
-    return { error: e instanceof Error ? e.message : "更新失敗" };
+  } catch {
+    return { error: "更新失敗" };
   }
 
   revalidateAll();
@@ -104,8 +104,8 @@ export async function deleteTileAction(
 
   try {
     await dal.deleteTile(id);
-  } catch (e) {
-    return { error: e instanceof Error ? e.message : "刪除失敗" };
+  } catch {
+    return { error: "刪除失敗" };
   }
 
   revalidateAll();

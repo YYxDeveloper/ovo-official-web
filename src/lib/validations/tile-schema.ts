@@ -8,7 +8,7 @@ export const tileSchema = z.object({
   finish: z.enum(["霧面", "亮面", "紋路"]),
   origin: z.string().min(1, "產地必填"),
   price: z.coerce.number().int().positive("價格必須大於 0"),
-  image: z.string().min(1, "圖片 URL 必填"),
+  image: z.url("必須是有效的 URL"),
   featured: z.coerce.boolean().default(false),
   sortOrder: z.coerce.number().int().default(0),
 });
