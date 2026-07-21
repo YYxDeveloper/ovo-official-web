@@ -117,4 +117,63 @@ describe("tile Server Actions — validation", () => {
 
     expect(result).toEqual({ error: "缺少 ID" });
   });
+
+  it("updateTileAction returns fieldErrors for invalid data", async () => {
+    const result = await updateTileAction(
+      undefined,
+      makeFormData({ ...validTileFields, id: "1", slug: "BAD SLUG!" })
+    );
+
+    expect(result?.error).toBe("驗證失敗");
+    expect(result?.fieldErrors?.slug).toBeDefined();
+  });
+});
+
+describe("tile Server Actions — DAL error handling", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.mocked(verifySession).mockResolvedValue({ role: "admin", expiresAt: new Date() });
+  });
+
+  it("createTileAction returns 'Slug 已存在' on unique constraint error", async () => {
+    const { createTile } = await import("@/lib/dal/tiles");
+    vi.mocked(createTile).mockRejectedValue(new Error("Unique constraint failed on the fields: (`slug`)"));
+
+    const result = await createTileAction(undefined, makeFormData(validTileFields));
+
+    expect(result).toEqual({ error: "Slug 已存在" });
+  });
+
+  it("createTileAction returns generic error message on DAL failure", async () => {
+    const { createTile } = await import("@/lib/dal/tiles");
+    vi.mocked(createTile).mockRejectedValue(new Error("Database connection lost"));
+
+    const result = await createTileAction(undefined, makeFormData(validTileFields));
+
+    expect(result).toEqual({ error: "Database connection lost" });
+  });
+
+  it("updateTileAction returns error message on DAL failure", async () => {
+    const { updateTile } = await import("@/lib/dal/tiles");
+    vi.mocked(updateTile).mockRejectedValue(new Error("Record not found"));
+
+    const result = await updateTileAction(
+      undefined,
+      makeFormData({ ...validTileFields, id: "1" })
+    );
+
+    expect(result).toEqual({ error: "Record not found" });
+  });
+
+  it("deleteTileAction returns error message on DAL failure", async () => {
+    const { deleteTile } = await import("@/lib/dal/tiles");
+    vi.mocked(deleteTile).mockRejectedValue(new Error("Foreign key constraint"));
+
+    const result = await deleteTileAction(
+      undefined,
+      makeFormData({ id: "1" })
+    );
+
+    expect(result).toEqual({ error: "Foreign key constraint" });
+  });
 });
