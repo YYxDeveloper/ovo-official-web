@@ -5,24 +5,10 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/data/types";
+import { staggerContainer, fadeUpItem } from "@/lib/animations";
 
-import type { Variants } from "framer-motion";
-
-const container: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
-  },
-};
-
-const item: Variants = {
-  hidden: { y: 30, opacity: 0 },
-  show: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-  },
-};
+const container = staggerContainer({ staggerChildren: 0.1, delayChildren: 0.05 });
+const item = fadeUpItem({ y: 30 });
 
 export function HeroBanner({ product }: { product: Product }) {
   return (
