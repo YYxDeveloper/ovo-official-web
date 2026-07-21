@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { CATEGORIES } from "@/lib/constants";
 import {
   categoryLabelsZh,
@@ -12,6 +11,8 @@ import type { ProductCategory } from "@/data/types";
 import { ProductImageGallery } from "@/components/product/ProductImageGallery";
 import { ProductHero } from "@/components/product/ProductHero";
 import { ProductSpecTable } from "@/components/product/ProductSpecTable";
+import { PageContainer } from "@/components/layout/PageContainer";
+import { Breadcrumb } from "@/components/navigation/Breadcrumb";
 
 export async function generateStaticParams() {
   const results = [];
@@ -53,16 +54,14 @@ export default async function ProductDetailPage({
   if (!product) notFound();
 
   return (
-    <div className="mx-auto max-w-[1280px] px-4 py-10 md:px-6 md:py-16">
-      <nav className="mb-6 text-xs text-ovo-muted">
-        <Link href="/" className="hover:text-ovo-text">首頁</Link>
-        <span className="mx-2">/</span>
-        <Link href={`/products/${category}`} className="hover:text-ovo-text">
-          {categoryLabelsZh[category]}
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-ovo-text">{product.name}</span>
-      </nav>
+    <PageContainer py="compact">
+      <Breadcrumb
+        items={[
+          { label: "首頁", href: "/" },
+          { label: categoryLabelsZh[category], href: `/products/${category}` },
+          { label: product.name },
+        ]}
+      />
 
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-16">
         <ProductImageGallery images={product.images} alt={product.name} />
@@ -80,6 +79,6 @@ export default async function ProductDetailPage({
           <ProductSpecTable specs={product.specs} />
         </div>
       </section>
-    </div>
+    </PageContainer>
   );
 }
