@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Package, LogOut } from "lucide-react";
+import { Package, LogOut, Grid2x2 } from "lucide-react";
 import { logoutAction } from "@/lib/auth/actions";
 import { verifySession } from "@/lib/auth/session";
 import { Button } from "@/components/ui/button";
@@ -31,6 +31,13 @@ export default async function AdminLayout({
             >
               <Package className="h-4 w-4" />
               產品管理
+            </Link>
+            <Link
+              href="/admin/tiles"
+              className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white"
+            >
+              <Grid2x2 className="h-4 w-4" />
+              磁磚管理
             </Link>
           </nav>
         </aside>

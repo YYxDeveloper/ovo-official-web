@@ -219,6 +219,37 @@ const products: SeedProduct[] = [
   },
 ];
 
+type SeedTile = {
+  slug: string;
+  name: string;
+  category: string;
+  size: string;
+  finish: string;
+  origin: string;
+  price: number;
+  image: string;
+  featured: boolean;
+  sortOrder: number;
+};
+
+const tileSeed: SeedTile[] = [
+  { slug: "wood-01", name: "橡木暖棕", category: "wood", size: "20x120 cm", finish: "霧面", origin: "義大利", price: 3200, image: "https://picsum.photos/seed/wood-01/600/400", featured: true, sortOrder: 0 },
+  { slug: "wood-02", name: "胡桃深灰", category: "wood", size: "15x90 cm", finish: "紋路", origin: "西班牙", price: 2800, image: "https://picsum.photos/seed/wood-02/600/400", featured: false, sortOrder: 1 },
+  { slug: "wood-03", name: "白橡北歐", category: "wood", size: "20x120 cm", finish: "霧面", origin: "義大利", price: 3500, image: "https://picsum.photos/seed/wood-03/600/400", featured: true, sortOrder: 2 },
+  { slug: "lux-01", name: "卡拉拉白大理", category: "luxury", size: "60x120 cm", finish: "亮面", origin: "義大利", price: 6800, image: "https://picsum.photos/seed/lux-01/600/400", featured: true, sortOrder: 3 },
+  { slug: "lux-02", name: "帝王金紋", category: "luxury", size: "80x80 cm", finish: "亮面", origin: "西班牙", price: 7200, image: "https://picsum.photos/seed/lux-02/600/400", featured: false, sortOrder: 4 },
+  { slug: "min-01", name: "純白霧感", category: "minimal", size: "60x60 cm", finish: "霧面", origin: "台灣", price: 1800, image: "https://picsum.photos/seed/min-01/600/400", featured: true, sortOrder: 5 },
+  { slug: "min-02", name: "淺灰素面", category: "minimal", size: "75x75 cm", finish: "霧面", origin: "西班牙", price: 2200, image: "https://picsum.photos/seed/min-02/600/400", featured: false, sortOrder: 6 },
+  { slug: "con-01", name: "清水模灰", category: "concrete", size: "60x60 cm", finish: "霧面", origin: "義大利", price: 2600, image: "https://picsum.photos/seed/con-01/600/400", featured: true, sortOrder: 7 },
+  { slug: "con-02", name: "深炭水泥", category: "concrete", size: "90x90 cm", finish: "紋路", origin: "西班牙", price: 3100, image: "https://picsum.photos/seed/con-02/600/400", featured: false, sortOrder: 8 },
+  { slug: "vin-01", name: "花磚普羅旺斯", category: "vintage", size: "20x20 cm", finish: "亮面", origin: "西班牙", price: 2400, image: "https://picsum.photos/seed/vin-01/600/400", featured: true, sortOrder: 9 },
+  { slug: "vin-02", name: "復古赭紅", category: "vintage", size: "15x15 cm", finish: "霧面", origin: "葡萄牙", price: 2000, image: "https://picsum.photos/seed/vin-02/600/400", featured: false, sortOrder: 10 },
+  { slug: "sub-01", name: "地鐵白長磚", category: "subway", size: "7.5x15 cm", finish: "亮面", origin: "台灣", price: 1200, image: "https://picsum.photos/seed/sub-01/600/400", featured: false, sortOrder: 11 },
+  { slug: "sub-02", name: "地鐵墨綠", category: "subway", size: "7.5x15 cm", finish: "亮面", origin: "英國", price: 1600, image: "https://picsum.photos/seed/sub-02/600/400", featured: false, sortOrder: 12 },
+  { slug: "hex-01", name: "六角米白", category: "hexagon", size: "20x23 cm", finish: "霧面", origin: "台灣", price: 1900, image: "https://picsum.photos/seed/hex-01/600/400", featured: false, sortOrder: 13 },
+  { slug: "hex-02", name: "六角礦石藍", category: "hexagon", size: "10x11 cm", finish: "亮面", origin: "義大利", price: 2300, image: "https://picsum.photos/seed/hex-02/600/400", featured: false, sortOrder: 14 },
+];
+
 async function main() {
   for (const product of products) {
     const existing = await prisma.product.findUnique({
@@ -283,6 +314,15 @@ async function main() {
       });
       console.log(`Created: ${product.name}`);
     }
+  }
+
+  for (const tile of tileSeed) {
+    await prisma.tile.upsert({
+      where: { slug: tile.slug },
+      update: tile,
+      create: tile,
+    });
+    console.log(`Upserted tile: ${tile.name}`);
   }
 }
 
