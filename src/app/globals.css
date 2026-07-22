@@ -55,6 +55,19 @@
   --color-ovo-blue: #2997ff;
   --color-ovo-border: rgba(255, 255, 255, 0.1);
 
+  --color-vigor-bg: #faf7f2;
+  --color-vigor-surface: #ffffff;
+  --color-vigor-text: #2d2d2d;
+  --color-vigor-heading: #1a1a1a;
+  --color-vigor-muted: #6b7280;
+  --color-vigor-primary: #e8432a;       /* Vigor 品牌紅 */
+  --color-vigor-primary-hover: #cc3722;
+  --color-vigor-secondary: #f59e0b;     /* 暖橘輔色 */
+  --color-vigor-border: #e5e1db;
+  --color-vigor-nav-bg: #ffffff;
+  --color-vigor-footer-bg: #2d2d2d;
+  --color-vigor-footer-text: #d4d4d4;
+
   --text-hero: clamp(2.5rem, 5vw, 5rem);
   --text-hero--line-height: 1.05;
   --text-hero--letter-spacing: -0.02em;
