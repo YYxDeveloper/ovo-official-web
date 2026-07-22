@@ -33,7 +33,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="zh-TW" className="h-full antialiased">
+    <html lang="zh-TW" className="h-full antialiased" suppressHydrationWarning>
       <body className="flex min-h-full flex-col bg-ovo-black text-ovo-text">
         <NuqsAdapter>
           <SiteHeader productsByCategory={productsByCategory} />
