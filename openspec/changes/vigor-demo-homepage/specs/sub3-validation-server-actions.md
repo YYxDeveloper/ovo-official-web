@@ -33,3 +33,4 @@
 - [ ] 未授權呼叫 action 回傳 `{ error: "未授權" }`
 - [ ] Zod 驗證失敗回傳 `fieldErrors`
 - [ ] CRUD 操作成功後正確 revalidate 路徑
+- [ ] 新增授權測試：未授權呼叫所有 mutating actions 被拒（延續 `tests/e2e/admin-authz.spec.ts` 模式）

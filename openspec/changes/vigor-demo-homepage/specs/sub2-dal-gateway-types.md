@@ -16,7 +16,7 @@
 | `src/lib/dal/vigor-slides.ts` | `src/lib/dal/products.ts` | CRUD: `getActiveSlides()`, `getSlideById()`, `createSlide()`, `updateSlide()`, `deleteSlide()` |
 | `src/lib/dal/vigor-services.ts` | 同上 | CRUD: `getActiveServices()`, `getServiceById()`, `createService()`, `updateService()`, `deleteService()` |
 | `src/lib/dal/vigor-partners.ts` | 同上 | CRUD: `getActivePartners()`, `getPartnerById()`, `createPartner()`, `updatePartner()`, `deletePartner()` |
-| `src/data/vigor.ts` | `src/data/products.ts` | `import "server-only"` — re-export DAL functions |
+| `src/data/vigor.ts` | `src/data/products.ts` | `import "server-only"` — re-export 讀取函式（`getActive*` / `get*ById`）與型別；mutation（create/update/delete）由 Server Actions 直接從 DAL 匯入（遵循 `product-actions.ts` 模式） |
 
 ## Key Patterns
 
@@ -29,4 +29,4 @@
 
 - [ ] 5 個檔案建立完成，無 TypeScript 錯誤
 - [ ] DAL 函式可在 Server Component 中正確呼叫
-- [ ] `vigor.ts` gateway 正確 re-export 所有 DAL 函式
+- [ ] `vigor.ts` gateway 正確 re-export 讀取函式與型別

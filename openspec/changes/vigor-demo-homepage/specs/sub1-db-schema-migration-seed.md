@@ -38,3 +38,4 @@
 - [ ] `bunx prisma migrate dev --name add_vigor_models` 成功
 - [ ] `bunx prisma db seed` 成功寫入所有 seed data
 - [ ] 驗證：`bunx prisma studio` 可查看 3 個新 table 的資料
+- [ ] 新增 vitest 資料層測試：3 個 Vigor model 基本 CRUD + seed 重複執行冪等性驗證

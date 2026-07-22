@@ -48,3 +48,4 @@ src/app/(admin)/admin/vigor/
 - [ ] Admin sidebar 顯示 Vigor 管理連結
 - [ ] 所有表單含 `useActionState` + 錯誤顯示
 - [ ] 未授權存取被正確拒絕
+- [ ] 新增 Playwright E2E：Admin Vigor CRUD 流程（登入 → 列表 → 新增 → 編輯 → 刪除）
