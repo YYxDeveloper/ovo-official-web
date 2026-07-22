@@ -1,11 +1,6 @@
 import "server-only";
 import { prisma } from "@/lib/db";
-import type {
-  VigorSlide,
-  VigorService,
-  VigorServiceCategory,
-  VigorPartner,
-} from "@/data/vigor-types";
+import type { VigorSlide } from "@/data/vigor-types";
 
 type SlideRow = Awaited<ReturnType<typeof prisma.vigorSlide.findFirst>>;
 
