@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Package, LogOut } from "lucide-react";
+import { Package, Image as ImageIcon, Briefcase, Handshake, LogOut } from "lucide-react";
 import { logoutAction } from "@/lib/auth/actions";
 import { verifySession } from "@/lib/auth/session";
 import { Button } from "@/components/ui/button";
@@ -31,6 +31,31 @@ export default async function AdminLayout({
             >
               <Package className="h-4 w-4" />
               產品管理
+            </Link>
+
+            <div className="mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+              Vigor
+            </div>
+            <Link
+              href="/admin/vigor/slides"
+              className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white"
+            >
+              <ImageIcon className="h-4 w-4" />
+              輪播管理
+            </Link>
+            <Link
+              href="/admin/vigor/services"
+              className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white"
+            >
+              <Briefcase className="h-4 w-4" />
+              服務管理
+            </Link>
+            <Link
+              href="/admin/vigor/partners"
+              className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white"
+            >
+              <Handshake className="h-4 w-4" />
+              夥伴管理
             </Link>
           </nav>
         </aside>
