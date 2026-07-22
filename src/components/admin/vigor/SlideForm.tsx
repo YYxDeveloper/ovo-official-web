@@ -24,7 +24,7 @@ export function SlideForm({ slide }: SlideFormProps) {
     <div className="mx-auto max-w-2xl">
       <Link
         href="/admin/vigor/slides"
-        className="mb-4 inline-flex items-center gap-1 text-sm text危险:hover:text-zinc-200"
+        className="mb-4 inline-flex items-center gap-1 text-sm text-zinc-400 hover:text-zinc-200"
       >
         <ArrowLeft className="h-4 w-4" />
         返回輪播列表
