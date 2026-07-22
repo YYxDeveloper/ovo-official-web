@@ -10,7 +10,6 @@ import {
   type ActionState,
 } from "@/lib/actions/vigor-slide-actions";
 import type { VigorSlide } from "@/data/vigor-types";
-import { VIGOR_SERVICE_CATEGORIES } from "@/data/vigor-types";
 
 interface SlideFormProps {
   slide?: VigorSlide;
