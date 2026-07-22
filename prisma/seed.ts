@@ -1,12 +1,25 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../src/lib/db";
 
-const prisma = new PrismaClient();
+type SeedProduct = {
+  slug: string;
+  name: string;
+  tagline: string;
+  category: string;
+  basePrice: number;
+  featured: boolean;
+  heroImage?: string;
+  sortOrder: number;
+  colors: { name: string; hex: string; imageUrl: string }[];
+  storage: { label: string; priceAdd: number }[];
+  specs: { label: string; value: string }[];
+  images: string[];
+};
 
 const phoneColors = [
   { name: "鈦黑色", hex: "#1d1d1f", imageUrl: "https://images.unsplash.com/photo-1592286927505-1def25115558?w=1200" },
   { name: "鈦白色", hex: "#f5f5f7", imageUrl: "https://images.unsplash.com/photo-1605236453806-6ff36851218e?w=1200" },
   { name: "鈦藍色", hex: "#3a4a5c", imageUrl: "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=1200" },
-  { name: "原色鈦金", hex: "#c4b8a0", imageUrl: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=1200" },
+  { name: "原色鈦金", hex: "#c4b8a0", imageUrl: "https://images.unsplash.com/photo-1601784551446-20c9e07dbdb?w=1200" },
 ];
 
 const phoneStorage = [
@@ -25,21 +38,6 @@ const budsColors = [
   { name: "經典白", hex: "#f5f5f7", imageUrl: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=1200" },
   { name: "深邃黑", hex: "#1d1d1f", imageUrl: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=1200" },
 ];
-
-type SeedProduct = {
-  slug: string;
-  name: string;
-  tagline: string;
-  category: string;
-  basePrice: number;
-  featured: boolean;
-  heroImage?: string;
-  sortOrder: number;
-  colors: { name: string; hex: string; imageUrl: string }[];
-  storage: { label: string; priceAdd: number }[];
-  specs: { label: string; value: string }[];
-  images: string[];
-};
 
 const products: SeedProduct[] = [
   {
@@ -65,7 +63,7 @@ const products: SeedProduct[] = [
       "https://images.unsplash.com/photo-1592286927505-1def25115558?w=1600",
       "https://images.unsplash.com/photo-1605236453806-6ff36851218e?w=1600",
       "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=1600",
-      "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=1600",
+      "https://images.unsplash.com/photo-1601784551446-20c9e07dbdb?w=1600",
     ],
   },
   {
@@ -91,7 +89,7 @@ const products: SeedProduct[] = [
       "https://images.unsplash.com/photo-1605236453806-6ff36851218e?w=1600",
       "https://images.unsplash.com/photo-1592286927505-1def25115558?w=1600",
       "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=1600",
-      "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=1600",
+      "https://images.unsplash.com/photo-1601784551446-20c9e07dbdb?w=1600",
     ],
   },
   {
@@ -117,7 +115,7 @@ const products: SeedProduct[] = [
       "https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=1600",
       "https://images.unsplash.com/photo-1592286927505-1def25115558?w=1600",
       "https://images.unsplash.com/photo-1605236453806-6ff36851218e?w=1600",
-      "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=1600",
+      "https://images.unsplash.com/photo-1601784551446-20c9e07dbdb?w=1600",
     ],
   },
   {
@@ -219,7 +217,66 @@ const products: SeedProduct[] = [
   },
 ];
 
-async function main() {
+const vigorSlides = [
+  {
+    title: "樂齡生活，從這裡開始",
+    subtitle: "躍齡平台陪伴每一位長者",
+    imageUrl: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=2000",
+    linkUrl: "/vigor",
+    sortOrder: 0,
+  },
+  {
+    title: "健康樂活每一天",
+    subtitle: "專業諮詢、健康追蹤一把罩",
+    imageUrl: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=2000",
+    linkUrl: "/vigor",
+    sortOrder: 1,
+  },
+  {
+    title: "終身學習不孤單",
+    subtitle: "課程、社群，樂齡生活更精采",
+    imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=2000",
+    linkUrl: "/vigor",
+    sortOrder: 2,
+  },
+];
+
+type VigorCategory = "health" | "learning" | "social" | "living";
+const vigorServiceNames: Record<VigorCategory, string[]> = {
+  health: ["健康諮詢", "用藥提醒", "體適能課程", "營養評估"],
+  learning: ["數位學堂", "語言教室", "樂齡大學", "手作工作坊"],
+  social: ["同學會社群", "志工媒合", "共餐活動", "鄰里關懷"],
+  living: ["生活管家", "居家修繕", "代購服務", "交通接送"],
+};
+
+const vigorServiceImageBase = "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1600";
+
+const vigorServiceData = (Object.keys(vigorServiceNames) as VigorCategory[]).flatMap(
+  (cat, catIdx) =>
+    vigorServiceNames[cat].map((name, i) => ({
+      name,
+      description: `${name} — 專業團隊為樂齡生活提供完整支援。`,
+      imageUrl: vigorServiceImageBase,
+      linkUrl: "/vigor",
+      category: cat,
+      sortOrder: catIdx * 4 + i,
+    })),
+);
+
+const vigorPartnerData = [
+  { name: "台灣樂齡發展協會", logoUrl: "https://picsum.photos/seed/p1/200/80" },
+  { name: "衛生福利部", logoUrl: "https://picsum.photos/seed/p2/200/80" },
+  { name: "教育部樂齡學習網", logoUrl: "https://picsum.photos/seed/p3/200/80" },
+  { name: "弘道老人福利基金會", logoUrl: "https://picsum.photos/seed/p4/200/80" },
+  { name: "伊甸社會福利基金會", logoUrl: "https://picsum.photos/seed/p5/200/80" },
+  { name: "門諾基金會", logoUrl: "https://picsum.photos/seed/p6/200/80" },
+  { name: "中華民國老人福利聯盟", logoUrl: "https://picsum.photos/seed/p7/200/80" },
+  { name: "台北市社會局", logoUrl: "https://picsum.photos/seed/p8/200/80" },
+  { name: "新北市高齡友善城市", logoUrl: "https://picsum.photos/seed/p9/200/80" },
+  { name: "健康樂齡媒體", logoUrl: "https://picsum.photos/seed/p10/200/80" },
+].map((p, i) => ({ ...p, sortOrder: i }));
+
+export async function seedProducts() {
   for (const product of products) {
     const existing = await prisma.product.findUnique({
       where: { slug: product.slug },
@@ -286,12 +343,34 @@ async function main() {
   }
 }
 
-main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+export async function seedVigor() {
+  await prisma.vigorSlide.deleteMany();
+  await prisma.vigorSlide.createMany({ data: vigorSlides });
+
+  await prisma.vigorService.deleteMany();
+  await prisma.vigorService.createMany({ data: vigorServiceData });
+
+  await prisma.vigorPartner.deleteMany();
+  await prisma.vigorPartner.createMany({ data: vigorPartnerData });
+
+  console.log(
+    `Vigor seed: ${vigorSlides.length} slides, ${vigorServiceData.length} services, ${vigorPartnerData.length} partners`,
+  );
+}
+
+export async function main() {
+  await seedProducts();
+  await seedVigor();
+}
+
+if (require.main === module) {
+  main()
+    .then(async () => {
+      await prisma.$disconnect();
+    })
+    .catch(async (e) => {
+      console.error(e);
+      await prisma.$disconnect();
+      process.exit(1);
+    });
+}
