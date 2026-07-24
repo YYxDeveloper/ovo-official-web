@@ -112,6 +112,17 @@
   --sidebar-ring: #2997ff;
 }
 
+/* Loongchi demo theme tokens */
+:root {
+  --lc-bg:      #F5F3F0;
+  --lc-surface: #EEEBE6;
+  --lc-primary: #B3A895;
+  --lc-accent:  #8A7B6E;
+  --lc-text:    #2D2D2D;
+  --lc-muted:   #7A7267;
+  --lc-border:  #D9D4CC;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
